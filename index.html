@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroDyne Systems - Professional Autonomous Maintenance Drones</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: #ffffff;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #2980b9;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #2980b9;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo::before {
+            content: "⬢";
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: color 0.3s;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a:hover {
+            color: #2980b9;
+        }
+
+        .hero {
+            margin-top: 80px;
+            padding: 80px 0;
+            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #2980b9, #3498db);
+            color: white;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(41, 128, 185, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            background: linear-gradient(135deg, #3498db, #5dade2);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(41, 128, 185, 0.4);
+        }
+
+        .products {
+            background: white;
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            font-weight: 300;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .robot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .robot-card {
+            background: white;
+            border: 1px solid #ecf0f1;
+            border-radius: 8px;
+            padding: 2.5rem;
+            text-align: left;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+        }
+
+        .robot-card:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            border-color: #2980b9;
+            transform: translateY(-8px);
+        }
+
+        .robot-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .robot-icon {
+            font-size: 2.5rem;
+            margin-right: 1rem;
+            color: #2980b9;
+        }
+
+        .robot-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .robot-model {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .robot-specs {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .robot-specs li {
+            padding: 0.3rem 0;
+            color: #5d6d7e;
+            font-size: 0.95rem;
+        }
+
+        .robot-specs li:before {
+            content: "✓";
+            color: #27ae60;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .robot-price {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2980b9;
+            margin: 1.5rem 0;
+        }
+
+        .configurator {
+            background: #ecf0f1;
+            padding: 80px 0;
+        }
+
+        .config-container {
+            background: white;
+            border-radius: 8px;
+            padding: 3rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .task-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .task-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .task-card:hover {
+            border-color: #2980b9;
+            background: linear-gradient(135deg, #f1f8ff, #e3f2fd);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(41, 128, 185, 0.15);
+        }
+
+        .task-card.selected {
+            border-color: #2980b9;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(41, 128, 185, 0.2);
+        }
+
+        .task-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .task-icon {
+            font-size: 1.8rem;
+            margin-right: 0.8rem;
+            color: #2980b9;
+        }
+
+        .task-card h4 {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .task-description {
+            color: #5d6d7e;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .task-price {
+            font-weight: 600;
+            color: #2980b9;
+            font-size: 1.1rem;
+        }
+
+        .cart {
+            background: #2c3e50;
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+
+        .cart h3 {
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            font-size: 1.3rem;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #34495e;
+            transition: all 0.3s ease;
+        }
+
+        .cart-item:hover {
+            background: rgba(52, 73, 94, 0.1);
+            padding-left: 10px;
+            border-radius: 4px;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-total {
+            font-size: 1.4rem;
+            font-weight: 600;
+            text-align: right;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 2px solid #34495e;
+        }
+
+        .checkout-btn {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            width: 100%;
+            margin-top: 1.5rem;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .checkout-btn:hover {
+            background: linear-gradient(135deg, #2ecc71, #58d68d);
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: #3498db;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #bdc3c7;
+            text-decoration: none;
+            line-height: 1.6;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 10% auto;
+            padding: 3rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+
+            .robot-card {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">AeroDyne Systems</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Solutions</a></li>
+                <li><a href="#configurator">Configure</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Professional Autonomous Maintenance Solutions</h1>
+            <p>Advanced drone technology for commercial property maintenance, inspection, and specialized tasks with enterprise-grade reliability and precision.</p>
+            <a href="#configurator" class="cta-button">Configure System</a>
+        </div>
+    </section>
+
+    <section id="products" class="products">
+        <div class="container">
+            <h2 class="section-title">Professional Drone Systems</h2>
+            <p class="section-subtitle">Purpose-built platforms designed for commercial maintenance operations</p>
+            <div class="robot-grid">
+                <div class="robot-card" data-robot="commercial">
+                    <div class="robot-header">
+                        <div class="robot-icon">⬢</div>
+                        <div>
+                            <h3>AeroDyne Commercial</h3>
+                            <div class="robot-model">Model AD-3000C</div>
+                        </div>
+                    </div>
+                    <ul class="robot-specs">
+                        <li>45-minute flight time</li>
+                        <li>15kg payload capacity</li>
+                        <li>Weather-resistant housing</li>
+                        <li>GPS precision navigation</li>
+                        <li>Real-time telemetry</li>
+                    </ul>
+                    <div class="robot-price">$12,500</div>
+                    <button class="cta-button" onclick="selectRobot('commercial')">Select Platform</button>
+                </div>
+                <div class="robot-card" data-robot="industrial">
+                    <div class="robot-header">
+                        <div class="robot-icon">⬢</div>
+                        <div>
+                            <h3>AeroDyne Industrial</h3>
+                            <div class="robot-model">Model AD-5000I</div>
+                        </div>
+                    </div>
+                    <ul class="robot-specs">
+                        <li>60-minute flight time</li>
+                        <li>25kg payload capacity</li>
+                        <li>Advanced obstacle avoidance</li>
+                        <li>Dual-redundant systems</li>
+                        <li>Enterprise fleet management</li>
+                    </ul>
+                    <div class="robot-price">$18,900</div>
+                    <button class="cta-button" onclick="selectRobot('industrial')">Select Platform</button>
+                </div>
+                <div class="robot-card" data-robot="professional">
+                    <div class="robot-header">
+                        <div class="robot-icon">⬢</div>
+                        <div>
+                            <h3>AeroDyne Professional</h3>
+                            <div class="robot-model">Model AD-7000P</div>
+                        </div>
+                    </div>
+                    <ul class="robot-specs">
+                        <li>90-minute flight time</li>
+                        <li>35kg payload capacity</li>
+                        <li>AI-powered task execution</li>
+                        <li>Multi-sensor array</li>
+                        <li>24/7 operational capability</li>
+                    </ul>
+                    <div class="robot-price">$24,750</div>
+                    <button class="cta-button" onclick="selectRobot('professional')">Select Platform</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="configurator" class="configurator">
+        <div class="container">
+            <h2 class="section-title">Task Configuration Modules</h2>
+            <p class="section-subtitle">Professional-grade task modules engineered for specific maintenance operations</p>
+            <div class="config-container">
+                <h3>Selected Platform: <span id="selected-model">None Selected</span></h3>
+                <p>Select specialized task modules to configure your maintenance system:</p>
+                
+                <div class="task-grid">
+                    <div class="task-card" data-task="arboriculture" data-price="1299">
+                        <div class="task-header">
+                            <div class="task-icon">🌲</div>
+                            <h4>Arboriculture Module</h4>
+                        </div>
+                        <div class="task-description">Professional tree maintenance system with precision cutting tools, branch analysis, and safety protocols for commercial landscapes.</div>
+                        <div class="task-price">$1,299</div>
+                    </div>
+                    <div class="task-card" data-task="facade-coating" data-price="1899">
+                        <div class="task-header">
+                            <div class="task-icon">🏢</div>
+                            <h4>Facade Coating Module</h4>
+                        </div>
+                        <div class="task-description">Advanced spray system for exterior building maintenance with pressure regulation, coverage mapping, and material optimization.</div>
+                        <div class="task-price">$1,899</div>
+                    </div>
+                    <div class="task-card" data-task="drainage-maintenance" data-price="899">
+                        <div class="task-header">
+                            <div class="task-icon">🏗️</div>
+                            <h4>Drainage Maintenance</h4>
+                        </div>
+                        <div class="task-description">Automated gutter and drainage system cleaning with debris removal and flow verification capabilities.</div>
+                        <div class="task-price">$899</div>
+                    </div>
+                    <div class="task-card" data-task="glazing-service" data-price="1149">
+                        <div class="task-header">
+                            <div class="task-icon">🏙️</div>
+                            <h4>Glazing Service Module</h4>
+                        </div>
+                        <div class="task-description">Commercial window cleaning system with purified water delivery, streak-free technology, and high-rise capabilities.</div>
+                        <div class="task-price">$1,149</div>
+                    </div>
+                    <div class="task-card" data-task="aquatic-maintenance" data-price="1449">
+                        <div class="task-header">
+                            <div class="task-icon">🏊</div>
+                            <h4>Aquatic Maintenance</h4>
+                        </div>
+                        <div class="task-description">Commercial pool and water feature maintenance with chemical monitoring, surface cleaning, and filtration support.</div>
+                        <div class="task-price">$1,449</div>
+                    </div>
+                    <div class="task-card" data-task="structural-inspection" data-price="1699">
+                        <div class="task-header">
+                            <div class="task-icon">🔍</div>
+                            <h4>Structural Inspection</h4>
+                        </div>
+                        <div class="task-description">Advanced imaging and analysis system for roof and structural assessments with thermal and visual inspection capabilities.</div>
+                        <div class="task-price">$1,699</div>
+                    </div>
+                    <div class="task-card" data-task="snow-removal" data-price="1549">
+                        <div class="task-header">
+                            <div class="task-icon">❄️</div>
+                            <h4>Snow Removal System</h4>
+                        </div>
+                        <div class="task-description">Heated air circulation and snow displacement system for rooftops, walkways, and critical infrastructure areas.</div>
+                        <div class="task-price">$1,549</div>
+                    </div>
+                    <div class="task-card" data-task="hvac-maintenance" data-price="1299">
+                        <div class="task-header">
+                            <div class="task-icon">🌬️</div>
+                            <h4>HVAC Maintenance</h4>
+                        </div>
+                        <div class="task-description">Rooftop HVAC unit cleaning and inspection system with filter replacement and performance monitoring capabilities.</div>
+                        <div class="task-price">$1,299</div>
+                    </div>
+                    <div class="task-card" data-task="solar-cleaning" data-price="999">
+                        <div class="task-header">
+                            <div class="task-icon">☀️</div>
+                            <h4>Solar Panel Cleaning</h4>
+                        </div>
+                        <div class="task-description">Specialized solar panel maintenance system with non-abrasive cleaning and efficiency monitoring technology.</div>
+                        <div class="task-price">$999</div>
+                    </div>
+                    <div class="task-card" data-task="pest-control" data-price="1199">
+                        <div class="task-header">
+                            <div class="task-icon">🦟</div>
+                            <h4>Pest Control Module</h4>
+                        </div>
+                        <div class="task-description">Targeted pest management system with precision application of approved treatments and population monitoring.</div>
+                        <div class="task-price">$1,199</div>
+                    </div>
+                    <div class="task-card" data-task="security-patrol" data-price="2199">
+                        <div class="task-header">
+                            <div class="task-icon">🛡️</div>
+                            <h4>Security Patrol System</h4>
+                        </div>
+                        <div class="task-description">Automated perimeter patrol with thermal imaging, motion detection, and real-time alert capabilities for property security.</div>
+                        <div class="task-price">$2,199</div>
+                    </div>
+                    <div class="task-card" data-task="air-quality" data-price="1799">
+                        <div class="task-header">
+                            <div class="task-icon">🌿</div>
+                            <h4>Air Quality Monitoring</h4>
+                        </div>
+                        <div class="task-description">Environmental monitoring system with multi-sensor array for air quality, temperature, humidity, and pollutant detection.</div>
+                        <div class="task-price">$1,799</div>
+                    </div>
+                    <div class="task-card" data-task="infrastructure-survey" data-price="2499">
+                        <div class="task-header">
+                            <div class="task-icon">🏗️</div>
+                            <h4>Infrastructure Survey</h4>
+                        </div>
+                        <div class="task-description">Comprehensive infrastructure mapping and condition assessment using LiDAR and photogrammetry technology.</div>
+                        <div class="task-price">$2,499</div>
+                    </div>
+                    <div class="task-card" data-task="emergency-response" data-price="2899">
+                        <div class="task-header">
+                            <div class="task-icon">🚨</div>
+                            <h4>Emergency Response</h4>
+                        </div>
+                        <div class="task-description">Rapid deployment emergency assessment and communication relay system with search and rescue support capabilities.</div>
+                        <div class="task-price">$2,899</div>
+                    </div>
+                    <div class="task-card" data-task="vegetation-management" data-price="1399">
+                        <div class="task-header">
+                            <div class="task-icon">🌱</div>
+                            <h4>Vegetation Management</h4>
+                        </div>
+                        <div class="task-description">Precision agriculture and landscaping system with growth monitoring, irrigation assessment, and health analysis.</div>
+                        <div class="task-price">$1,399</div>
+                    </div>
+                </div>
+
+                <div class="cart">
+                    <h3>System Configuration</h3>
+                    <div id="cart-items">
+                        <p>Select a drone platform to begin system configuration</p>
+                    </div>
+                    <div class="cart-total" id="cart-total">Total Investment: $0</div>
+                    <button class="cta-button checkout-btn" onclick="checkout()">Request Quote</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>AeroDyne Systems</h4>
+                    <p>Leading provider of autonomous maintenance drone solutions for commercial and industrial applications.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <p>Technical Support: 1-800-AERODYNE</p>
+                    <p>Service Hours: 24/7 Enterprise Support</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Compliance</h4>
+                    <p>FAA Part 107 Certified</p>
+                    <p>ISO 9001:2015 Quality Management</p>
+                </div>
+            </div>
+            <p>&copy; 2025 AeroDyne Systems Inc. All rights reserved. Professional maintenance automation solutions.</p>
+        </div>
+    </footer>
+
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Quote Request Submitted</h2>
+            <p>Thank you for your interest in AeroDyne Systems. Our sales engineering team will contact you within 24 hours to discuss your configuration and provide detailed pricing.</p>
+            <p><strong>Configuration Value: <span id="final-total">$0</span></strong></p>
+            <button class="cta-button" onclick="closeModal()">Continue</button>
+        </div>
+    </div>
+
+    <script>
+        const robotPrices = {
+            commercial: 12500,
+            industrial: 18900,
+            professional: 24750
+        };
+
+        let selectedRobot = null;
+        let selectedTasks = new Set();
+        let cartTotal = 0;
+
+        function selectRobot(robotType) {
+            selectedRobot = robotType;
+            const modelNames = {
+                commercial: 'AeroDyne Commercial (AD-3000C)',
+                industrial: 'AeroDyne Industrial (AD-5000I)',
+                professional: 'AeroDyne Professional (AD-7000P)'
+            };
+            document.getElementById('selected-model').textContent = modelNames[robotType];
+            updateCart();
+            
+            document.getElementById('configurator').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        document.querySelectorAll('.task-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const task = this.dataset.task;
+                
+                if (selectedTasks.has(task)) {
+                    selectedTasks.delete(task);
+                    this.classList.remove('selected');
+                } else {
+                    selectedTasks.add(task);
+                    this.classList.add('selected');
+                }
+                
+                updateCart();
+            });
+        });
+
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            const cartTotalEl = document.getElementById('cart-total');
+            
+            if (!selectedRobot) {
+                cartItems.innerHTML = '<p>Select a drone platform to begin system configuration</p>';
+                cartTotalEl.textContent = 'Total Investment: $0';
+                return;
+            }
+
+            const modelNames = {
+                commercial: 'AeroDyne Commercial Platform',
+                industrial: 'AeroDyne Industrial Platform',
+                professional: 'AeroDyne Professional Platform'
+            };
+
+            let html = `<div class="cart-item">
+                <span>${modelNames[selectedRobot]}</span>
+                <span>$${robotPrices[selectedRobot].toLocaleString()}</span>
+            </div>`;
+
+            cartTotal = robotPrices[selectedRobot];
+
+            selectedTasks.forEach(task => {
+                const taskCard = document.querySelector(`[data-task="${task}"]`);
+                const taskName = taskCard.querySelector('h4').textContent;
+                const taskPrice = parseInt(taskCard.dataset.price);
+                
+                html += `<div class="cart-item">
+                    <span>${taskName}</span>
+                    <span>$${taskPrice.toLocaleString()}</span>
+                </div>`;
+                
+                cartTotal += taskPrice;
+            });
+
+            cartItems.innerHTML = html;
+            cartTotalEl.textContent = `Total Investment: $${cartTotal.toLocaleString()}`;
+        }
+
+        function checkout() {
+            if (!selectedRobot) {
+                alert('Please select a drone platform to proceed.');
+                return;
+            }
+
+            document.getElementById('final-total').textContent = `$${cartTotal.toLocaleString()}`;
+            document.getElementById('checkout-modal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('checkout-modal').style.display = 'none';
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
